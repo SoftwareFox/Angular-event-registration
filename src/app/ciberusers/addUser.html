@@ -1,0 +1,35 @@
+<div class="jumbotron col-md-6 col-md-offset-3">
+    <h3>Legg til ny bruker</h3>
+    <br/>
+    <form name="form" role="form">
+    <div class="row">
+        <div class="col-xs-2">
+            <div class="form-group">
+                <label class="control-label">Fornavn:</label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Etternavn:</label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Epost:</label>
+            </div>
+        </div>
+        <div class="col-xs-8">
+            <div class="form-group">
+                <input type="text" ng-model="ctrl.firstname" style='width:100%' required>
+            </div>
+            <div class="form-group">
+                <input type="text" ng-model="ctrl.lastname" style='width:100%' required>
+            </div>
+            <div class="form-group">
+                <input type="text" ng-model="ctrl.email" style='width:100%' required>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-success" ng-click="ctrl.addUser()" ng-disabled="form.$invalid">Legg til</button>
+        <button class="btn btn-default" ng-click="ctrl.cancel()">Avbryt</button>
+    </div>
+    </form>
+
+</div>

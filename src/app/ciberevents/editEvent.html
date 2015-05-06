@@ -1,0 +1,43 @@
+<div class="jumbotron">
+    <h3>Rediger event</h3>
+    <br/>
+    <div class="row">
+        <div class="col-xs-6">
+        <div class="form-group">
+            <label class="control-label">Event navn:</label>
+            <input type="text" ng-model="ctrl.event.name" size="55">
+        </div>
+        <div class="form-group">
+            <label class="control-label">Beskrivelse:</label>
+            <textarea ng-model="ctrl.event.description" style='width:500px' rows="10"></textarea>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Plassering:</label>
+            <select ng-model="ctrl.Location" ng-options="location.location for location in ctrl.locations" ng-init="ctrl.Location=ctrl.locations[ctrl.locationIndex]"></select>
+        </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label class="control-label">Startdato:</label>
+                <input type="text" placeholder="Date" ng-model="ctrl.event.startDate"
+                       datepicker-popup="dd/MM/yyyy" is-open="ctrl.opened1" ng-click="ctrl.open($event,'opened1')" close-text="Close">
+            </div>
+            <div class="form-group">
+                <timepicker ng-model="ctrl.startTime"></timepicker>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Sluttdato:</label>
+                <input type="text" placeholder="Date" ng-model="ctrl.event.endDate"
+                       datepicker-popup="dd/MM/yyyy" is-open="ctrl.opened2" ng-click="ctrl.open($event, 'opened2')" close-text="Close"/>
+            </div>
+            <div class="form-group">
+                <timepicker ng-model="ctrl.endTime"></timepicker>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-success" ng-click="ctrl.saveEvent(ctrl.event)">Lager</button>
+        <button class="btn btn-default" ng-click="ctrl.cancel()">Avbryt</button>
+    </div>
+</div>
+

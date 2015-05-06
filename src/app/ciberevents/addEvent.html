@@ -1,0 +1,49 @@
+<div class="jumbotron">
+    <form name="form" role="form">
+    <h3>Legg til ny ciber event</h3>
+    <br/>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label class="control-label">Event navn:</label>
+                <input type="text" ng-model="ctrl.name" name="name" size="55" required/>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Beskrivelse:</label>
+                <textarea ng-model="ctrl.description" style='width:500px;' rows="10" required></textarea>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Plassering:</label>
+                <select ng-model="ctrl.Location" ng-options="location.location for location in ctrl.locations" required></select>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label class="control-label">Startdato:</label>
+                <input type="text" placeholder="Date" ng-model="ctrl.eventStartDate"
+                       datepicker-popup="dd/MM/yyyy" is-open="ctrl.openedStartDate" ng-click="ctrl.open($event,'openedStartDate')" close-text="Close" required />
+            </div>
+            <div class="form-group">
+                <timepicker ng-model="ctrl.startTime"></timepicker>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Sluttdato:</label>
+                <input type="text" placeholder="Date" ng-model="ctrl.eventEndDate"
+                       datepicker-popup="dd/MM/yyyy" is-open="ctrl.openedEndDate" ng-click="ctrl.open($event, 'openedEndDate')" close-text="Close" required />
+            </div>
+            <div class="form-group">
+                <timepicker ng-model="ctrl.endTime"></timepicker>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button ng-disabled="form.$invalid" class="btn btn-success" ng-click="ctrl.addEvent()">Lager</button>
+        <button class="btn btn-default" ng-click="ctrl.cancel()">Avbryt</button>
+    </div>
+    </form>
+
+</div>
+
+
+

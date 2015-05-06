@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h3>{{ctrl.properties.title}}</h3>
+</div>
+
+<div class="modal-body">
+    <div class="form-group">
+        <table>
+            <tbody>
+            <tr>
+                <td>Bruker:</td>
+                <td><input type="text" ng-model="ctrl.usermail" required></td>
+            </tr>
+            <tr>
+                <td>Passord:</td>
+                <td><input type="password" ng-model="ctrl.password" required></td>
+            </tr>
+            </tbody>
+        </table>
+    </div></div>
+
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ctrl.login()">{{ctrl.properties.buttons[0]}}</button>
+    <button class="btn btn-default" ng-click="ctrl.cancel()">{{ctrl.properties.buttons[1]}}</button>
+</div>

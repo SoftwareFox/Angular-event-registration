@@ -1,0 +1,25 @@
+<div class="jumbotron">
+    <h3>Plassering detaljer</h3>
+    <br/>
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="form-group">
+                <label class="control-label">Navn:</label>
+                {{ctrl.location.location}}
+            </div>
+            <div class="form-group">
+                <label class="control-label">Address:</label>
+                {{ctrl.location.address}} ({{ctrl.location.latitude}} {{ctrl.location.longitude}})
+            </div>
+            <div class="form-group">
+                <label class="control-label">Retninger(Beskrivelse):</label>
+                {{ctrl.location.description}}
+            </div>
+        </div>
+        <div class="form-group col-xs-8">
+            <ui-gmap-google-map center="ctrl.map.center" zoom="ctrl.map.zoom">
+                <ui-gmap-marker idKey="ctrl.marker.id" coords="ctrl.marker.coords" options="ctrl.marker.options"></ui-gmap-marker>
+            </ui-gmap-google-map>
+        </div>
+    </div>
+</div>

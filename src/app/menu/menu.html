@@ -1,0 +1,50 @@
+<div ng-controller="MenuCtrl as ctrl">
+    <div id="adminNavBar" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav ">
+                    <li><a href="#/">Home</a></li>
+                    <li>
+                        <a class="dropdown-toggle " data-toggle="dropdown" href="" role="button" aria-expanded="true">
+                            Ciber Eventer<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li> <a ng-href="#/addciberevent">Legg til ny event</a></li>
+                            <li> <a ng-href="#/ciberevents">Eventer liste</a></li>
+                            <li> <a ng-href="#/cibercalendar">Aktivitetskalender</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-expanded="true">
+                           Ciber Bruker<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li> <a ng-href="#/addciberuser">Legg til ny Ciber bruker</a></li>
+                            <li> <a ng-href="#/ciberusers">Ciber bruker liste</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-expanded="true">
+                           Ciber Plasseringer<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li> <a ng-href="#/addciberlocation">Legg til ny Ciber plassering</a></li>
+                            <li> <a ng-href="#/ciberlocations">Ciber Plaseringer liste</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a ng-model="ctrl.loggedInUser" ng-show="ctrl.loggedInUser.id">Velkommen, {{ctrl.loggedInUser.firstname}} {{ctrl.loggedInUser.lastname}}!</a></li>
+                    <li><a data-toggle="collapse" data-target=".navbar-collapse" ng-click="ctrl.logout()" ng-show="ctrl.loggedInUser.id">Logg ut</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="ctrl.showSpinner" class="page-splash dissolve-animation">
+        <div data-spinner="ctrl.spinnerOptions"></div>
+        <div class="page-splash-message page-splash-message-subtle">{{ctrl.spinnerMessage}}</div>
+    </div>
+
+    <div ui-view id="ui-view" class="container slide-animation admin-content"></div>
+</div>

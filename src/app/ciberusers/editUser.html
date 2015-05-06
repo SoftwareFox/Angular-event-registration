@@ -1,0 +1,33 @@
+<div class="jumbotron">
+    <h3>Rediger bruker</h3>
+    <br/>
+    <div class="row">
+        <div class="col-xs-1">
+            <div class="form-group">
+                <label class="control-label">Fornavn:</label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Etternavn:</label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Epost:</label>
+            </div>
+            </div>
+
+            <div class="col-xs-10">
+                <div class="form-group">
+                    <input type="text" ng-model="ctrl.user.firstname">
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="ctrl.user.lastname">
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="ctrl.user.email">
+                </div>
+            </div>
+        </div>
+    <div class="form-group">
+        <button class="btn btn-success" ng-click="ctrl.saveUser(ctrl.user)">Lagre</button>
+        <button class="btn btn-default" ng-click="ctrl.cancel()">Avbryt</button>
+    </div>
+</div>

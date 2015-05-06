@@ -1,0 +1,42 @@
+<div class="jumbotron">
+
+    <div class="row">
+        <div class="form-group col-xs-6">
+            <h3>{{ctrl.event.name}}</h3>
+        </div>
+        <div class="form-group col-xs-6">
+            <label class="control-label">{{ctrl.event.startDate | date:'yyyy-MM-dd HH:mm'}} - {{ctrl.event.endDate | date:'yyyy-MM-dd HH:mm'}}</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-xs-3" >
+           <table class="table table-bordered table-hover table-striped">
+               <thead>
+               <tr>
+                   <th>Påmeldte bruker</th>
+               </tr>
+               </thead>
+               <tbody>
+               <tr ng-repeat="user in ctrl.event.users">
+                   <td>{{user.firstname}} {{user.lastname}}</td>
+               </tr>
+               </tbody>
+           </table>
+        </div>
+        <div class="form-group col-xs-9 ">
+            <label class="control-label">Beskrivelse</label>{{ctrl.event.description}}
+            <br/>
+            <label class="control-label">Address</label> {{ctrl.location_address}} ({{ctrl.event.location.latitude}}, {{ctrl.event.location.longitude}})
+            <br/>
+            <label class="control-label">Retninger</label> {{ctrl.event.location.description}}
+            <br/>
+            <label class="control-label">Event plassering</label> {{ctrl.event.location.location}}
+            <div class="form-group">
+                <ui-gmap-google-map center="ctrl.map.center" zoom="ctrl.map.zoom">
+                    <ui-gmap-marker idKey="ctrl.marker.id" coords="ctrl.marker.coords" options="ctrl.marker.options"></ui-gmap-marker>
+                </ui-gmap-google-map>
+            </div>
+        </div>
+    </div>
+</div>
+
