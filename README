@@ -1,0 +1,5 @@
+install nodejs (https://nodejs.org/)
+run command "npm install" in folder ../EventRegistration
+install bower (http://bower.io/)
+run command "bower install" in folder ../EventRegistration
+run command "gulp watch" in folder ../EventRegistration
