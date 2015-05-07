@@ -66,7 +66,7 @@ gulp.task('injectjs', function(){
 gulp.task('default', function() {
     connect.server({
         root: ['src'],
-        port: 5000, // localhost:5000
+        port: process.env.PORT || 5000, // localhost:5000
         livereload: false
     });
 });
