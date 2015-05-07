@@ -20,7 +20,7 @@
             <div class="form-group">
                 <label class="control-label">Startdato:</label>
                 <input type="text" placeholder="Date" ng-model="ctrl.event.startDate"
-                       datepicker-popup="dd/MM/yyyy" is-open="ctrl.opened1" ng-click="ctrl.open($event,'opened1')" close-text="Close">
+                       datepicker-popup="dd/MM/yyyy" is-open="ctrl.openedStartDate" ng-click="ctrl.open($event,'openedStartDate')" close-text="Close">
             </div>
             <div class="form-group">
                 <timepicker ng-model="ctrl.startTime"></timepicker>
@@ -28,7 +28,7 @@
             <div class="form-group">
                 <label class="control-label">Sluttdato:</label>
                 <input type="text" placeholder="Date" ng-model="ctrl.event.endDate"
-                       datepicker-popup="dd/MM/yyyy" is-open="ctrl.opened2" ng-click="ctrl.open($event, 'opened2')" close-text="Close"/>
+                       datepicker-popup="dd/MM/yyyy" is-open="ctrl.openedEndDate" ng-click="ctrl.open($event, 'openedEndDate')" close-text="Close"/>
             </div>
             <div class="form-group">
                 <timepicker ng-model="ctrl.endTime"></timepicker>

@@ -6,7 +6,6 @@
 
     function CiberEventDetailsCtrl(initialData, maps, $timeout) {
         var ctrl = this;
-        ctrl.activate = activate;
         ctrl.event = initialData.event;
 
         activate();

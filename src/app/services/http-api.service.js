@@ -6,6 +6,13 @@
     httpService.$inject = ['$http', 'appSpinner'];
 
        function httpService($http, appSpinner) {
+           var baseUrl = 'https://ciber-event-aggregator.herokuapp.com';
+
+           var requestConfig = {
+               headers: {
+                   'Content-Type': 'application/json'
+               }
+           };
             var service = {
                 getCiberEvents: getCiberEvents,
                 getCiberEvent: getCiberEvent,
@@ -23,14 +30,6 @@
                 addCiberLocation: addCiberLocation,
                 deleteCiberLocation: deleteCiberLocation,
                 saveCiberLocation: saveCiberLocation
-            };
-
-           var baseUrl = 'https://ciber-event-aggregator.herokuapp.com';
-
-            var requestConfig = {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
             };
 
         return service;

@@ -6,7 +6,7 @@
 
     function CiberEventsCtrl(initialData, httpService, dialogsService, loaddataService, utilService) {
         var ctrl = this;
-        ctrl.activate = activate;
+
         ctrl.events = initialData.events;
         ctrl.locations = initialData.locations;
         ctrl.deleteItem = deleteItem;

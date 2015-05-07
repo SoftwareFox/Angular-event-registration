@@ -6,12 +6,11 @@
 
     function CiberEventCtrl(initialData, httpService, $location) {
         var ctrl = this;
-        ctrl.activate = activate;
         ctrl.event = initialData.event;
         ctrl.locations = initialData.locations;
         ctrl.saveEvent = saveEvent;
         ctrl.addEvent = addEvent;
-        ctrl.cancel = cancel;
+       // ctrl.cancel = cancel;
 
         ctrl.open = openDatePicker;
         ctrl.openedStartDate = false;
@@ -46,8 +45,8 @@
         }
 
         function openDatePicker($event, opened) {
-            $event.preventDefault();
-            $event.stopPropagation();
+           // $event.preventDefault();
+           // $event.stopPropagation();
             if (opened == 'openedStartDate') {
                 ctrl.openedStartDate = true;
             }

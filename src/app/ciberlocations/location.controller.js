@@ -2,11 +2,11 @@
     'use strict';
 
     angular.module('ciberModule').controller('CiberLocationCtrl',CiberLocationCtrl);
-    CiberLocationCtrl.$inject = ['initialData', 'httpService','$location', '$timeout','maps', 'currentPosition'];
+    CiberLocationCtrl.$inject = ['initialData', 'httpService','$location', '$timeout', 'maps', 'currentPosition'];
 
     function CiberLocationCtrl(initialData, httpService, $location, $timeout, maps, currentPosition) {
         var ctrl = this;
-        ctrl.activate = activate;
+
         ctrl.location = initialData;
         ctrl.addLocation = addLocation;
         ctrl.saveLocation = saveLocation;

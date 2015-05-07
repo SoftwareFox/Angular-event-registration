@@ -84,6 +84,9 @@
                 resolve:{
                     initialData: ['loaddataService', function (loaddataService) {
                         return loaddataService.getCiberLocations();
+                    }],
+                    maps: ['uiGmapGoogleMapApi', function(uiGmapGoogleMapApi){
+                        return uiGmapGoogleMapApi;
                     }]
                 }
             })

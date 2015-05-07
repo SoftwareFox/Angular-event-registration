@@ -6,7 +6,7 @@
 
     function HomeCtrl(loaddataService) {
         var ctrl = this;
-        ctrl.activate = activate;
+
         ctrl.loggedInUser = loaddataService.getLoggedInUser();
 
         activate();

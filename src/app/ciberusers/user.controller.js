@@ -6,7 +6,7 @@
 
     function CiberUsersCtrl(initialData, httpService, $location, dialogsService, utilService) {
         var ctrl = this;
-        ctrl.user = initialData.user;
+        ctrl.user = initialData;
         ctrl.users = initialData.users;
 
         ctrl.addUser = addUser;
@@ -14,9 +14,9 @@
         ctrl.deleteUser = deleteUser;
         ctrl.cancel = cancel;
         ctrl.paginate = paginate;
-        ctrl.activate = activate;
 
         activate();
+
         function activate() {
             if (!angular.isUndefined(ctrl.users)){
                 ctrl.totalItems = ctrl.users.length;

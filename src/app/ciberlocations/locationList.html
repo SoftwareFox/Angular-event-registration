@@ -6,9 +6,8 @@
         <tr>
             <th>Id</th>
             <th>Navn</th>
-            <th>Addresse</th>
-            <th>Retninger</th>
-            <th>Beskrivelse</th>
+            <th>Adresse</th>
+            <th>Retninger/Beskrivelse</th>
             <th></th>
         </tr>
         </thead>
@@ -16,9 +15,8 @@
         <tr ng-repeat="location in ctrl.locations | filter : ctrl.paginate">
             <td>{{location.id}}</td>
             <td><a ng-href="#/ciberlocationdetails/{{location.id}}">{{location.location}}</a></td>
-            <td>{{location.address}} ({{location.latitude}}, {{location.longitude}})</td>
-            <td>{{location.directions}}
-            <td>{{location.description}}</td>
+            <td>{{ctrl.locationAddress[location.id]}} ({{location.latitude}}, {{location.longitude}})</td>
+            <td>{{location.directions}}/{{location.description}}</td>
             <td>
                 <div class="btn-group">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-expanded="true">

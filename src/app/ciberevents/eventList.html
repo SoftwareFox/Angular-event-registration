@@ -1,5 +1,5 @@
 <div>
-    <h3>Event List</h3>
+    <h3>Event Liste</h3>
     <br/>
     <div>
         <table class=" table table-hover table-striped">
@@ -27,8 +27,8 @@
                 </td>
                 <td>{{event.id}}</td>
                 <td><a ng-href="#/cibereventdetails/{{event.id}}">{{event.name}}</a></td>
-                <td>{{event.startDate | date:'yyyy-MM-dd'}}</td>
-                <td>{{event.endDate | date:'yyyy-MM-dd'}}</td>
+                <td>{{event.startDate | date:'dd-MM-yyyy HH:mm a'}}</td>
+                <td>{{event.endDate | date:'dd-MM-yyyy HH:mm a'}}</td>
                 <td>{{event.location.location}}</td>
                 <td>
                     <div class="btn-group">
