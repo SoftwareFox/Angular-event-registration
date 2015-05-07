@@ -17,7 +17,6 @@
 
         function activate() {
             geocoding(ctrl.locations[0], 0);
-
             if (!angular.isUndefined(ctrl.locations)){
                 ctrl.totalItems = ctrl.locations.length;
                 ctrl.currentPage = 1;
@@ -37,7 +36,7 @@
                         }
                     }
                     else if (status == maps.GeocoderStatus.OVER_QUERY_LIMIT) {
-                        pause = +100;
+                        pause = +10;
                         geocoding(ctrl.locations[index], index);
                     }
                 },pause);

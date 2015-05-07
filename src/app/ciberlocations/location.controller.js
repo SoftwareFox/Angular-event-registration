@@ -1,106 +1,99 @@
+//controller used by
+// addLocation,
+// editLocation
+// locationDetails
 ( function (){
     'use strict';
-
     angular.module('ciberModule').controller('CiberLocationCtrl',CiberLocationCtrl);
     CiberLocationCtrl.$inject = ['initialData', 'httpService','$location', '$timeout', 'maps', 'currentPosition'];
 
     function CiberLocationCtrl(initialData, httpService, $location, $timeout, maps, currentPosition) {
         var ctrl = this;
-
         ctrl.location = initialData;
+
         ctrl.addLocation = addLocation;
         ctrl.saveLocation = saveLocation;
         ctrl.cancel = cancel;
         ctrl.loadMapWithAddress = loadMapWithAddress;
         var geocoder = new maps.Geocoder();
-
-        ctrl.map = {
-            center: {
-                latitude: currentPosition.coords.latitude,
-                longitude: currentPosition.coords.longitude
-            },
-            zoom: 12
-        };
-
-        ctrl.marker = {
-            id: 1,
-            coords: currentPosition.coords
-        };
+        var pause = 0;
 
         activate();
 
         function activate() {
-            if (angular.isUndefined(ctrl.location.locations)){
+            pause = 0;
+            if (!angular.equals({}, ctrl.location)){
                 loadMapWithCoordinates(ctrl.location.latitude, ctrl.location.longitude );
+            }else{
+                ctrl.map = {
+                    center: {
+                        latitude: currentPosition.coords.latitude,
+                        longitude: currentPosition.coords.longitude
+                    },
+                    zoom:12
+                };
+                ctrl.marker = {
+                    coords: currentPosition.coords,
+                    id:1
+                };
             }
-        }
-
-        function cancel(){
-            $location.path('/ciberlocations');
         }
 
         function loadMapWithCoordinates(latitudeValue, longitudeValue) {
             var latlng = new maps.LatLng(latitudeValue, longitudeValue);
-            geocoder.geocode({'latLng' : latlng}, function (result) {
-                if (result.length > 0) {
-                    var coordinates = result[0].geometry.location;
-                    ctrl.address = result[0].formatted_address;
-                    $timeout( function(){
-                        ctrl.map.center = {
-                            latitude: coordinates.lat(),
-                            longitude: coordinates.lng()
-                        };
-                        ctrl.marker={
-                            id:1,
-                            coords: {
-                                latitude: ctrl.map.center.latitude,
-                                longitude: ctrl.map.center.longitude
-                            }
-                        };
-                    },0);
-                }
+            geocoder.geocode({'latLng' : latlng}, function (result, status) {
+                $timeout( function(){
+                    if (status == maps.GeocoderStatus.OK) {
+                        var coordinates = result[0].geometry.location;
+                        ctrl.address = result[0].formatted_address;
+                        updateMap(coordinates);
+                    }else {
+                         pause = +10;
+                         loadMapWithCoordinates(latitudeValue, longitudeValue);
+                        }
+                }, pause);
             });
+        }
+
+        function updateMap(coordinates) {
+            ctrl.map = {
+                center : {
+                    latitude: coordinates.lat(),
+                    longitude: coordinates.lng()
+                    },
+                zoom:12
+                };
+            ctrl.marker = {
+                id: 1,
+                coords: {
+                    latitude: ctrl.map.center.latitude,
+                    longitude: ctrl.map.center.longitude
+                }
+            }
         }
 
         function loadMapWithAddress(locationAddress) {
-            geocoder.geocode({address: locationAddress}, function (result) {
-                if (result.length > 0) {
-                    var addrLocation = result[0].geometry.location;
-                    ctrl.latitude = addrLocation.lat();//.toFixed(6);
-                    ctrl.longitude = addrLocation.lng();//.toFixed(6);
-                    if (!angular.isUndefined(ctrl.location)) {
-                        ctrl.location.latitude = addrLocation.lat();//.toFixed(6);
-                        ctrl.location.longitude = addrLocation.lng();//.toFixed(6);
+            geocoder.geocode({address: locationAddress}, function (result, status) {
+                $timeout( function() {
+                    if (status == maps.GeocoderStatus.OK) {
+                        var coordinates = result[0].geometry.location;
+                        ctrl.latitude = coordinates.lat();
+                        ctrl.longitude = coordinates.lng();
+                        if (!angular.isUndefined(ctrl.location)) {
+                            ctrl.location.latitude = coordinates.lat();
+                            ctrl.location.longitude = coordinates.lng();
+                        }
+                        updateMap(coordinates);
+                    }else{
+                        pause=+10;
+                        loadMapWithAddress(locationAddress);
                     }
-                    $timeout( function(){
-                        ctrl.map.center = {
-                            latitude: addrLocation.lat(),
-                            longitude: addrLocation.lng()
-                        };
-                        ctrl.marker={
-                            id:1,
-                            coords: {
-                                latitude: ctrl.map.center.latitude,
-                                longitude: ctrl.map.center.longitude
-                            }
-                        };
-                    },0);
-                }
-            });
-        }
-
-        function setLatitudeAndLongitude(locationAddress) {
-            geocoder.geocode({address: locationAddress}, function (result) {
-                if (result.length > 0) {
-                    var addrLocation = result[0].geometry.location;
-                    ctrl.location.latitude = addrLocation.lat();//.toFixed(6);
-                    ctrl.location.longitude = addrLocation.lng();//.toFixed(6);
-                }
+                },pause);
             });
         }
 
         function addLocation(){
-            setLatitudeAndLongitude(ctrl.address);
+            loadMapWithAddress(ctrl.address);
             var location = {
                 location : ctrl.name,
                 latitude: ctrl.latitude,
@@ -119,6 +112,10 @@
                 }, function (reason) {
                     console.log('Failed to save data ' + reason);
                 });
+        }
+
+        function cancel(){
+            $location.path('/ciberlocations');
         }
     }
 })();

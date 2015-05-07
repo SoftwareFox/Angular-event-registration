@@ -96,8 +96,8 @@
                 controller: 'CiberLocationCtrl',
                 controllerAs: 'ctrl',
                 resolve:{
-                    initialData: ['loaddataService', function (loaddataService) {
-                        return loaddataService.getCiberLocations();
+                    initialData: [ function () {
+                        return {}
                     }],
                     maps: ['uiGmapGoogleMapApi', function(uiGmapGoogleMapApi){
                         return uiGmapGoogleMapApi;
