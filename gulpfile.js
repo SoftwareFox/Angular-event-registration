@@ -1,9 +1,9 @@
 'use strict';
-//gulp - Build system automating tasks
 var gulp = require('gulp');
 //Automatically load any gulp plugins in your package.json
 //src, watch, dest
 var plugins = require('gulp-load-plugins')();
+var connect= require('gulp-connect');
 
 var paths = {
     appScripts: 'src/app/**/*.js'
@@ -33,9 +33,9 @@ gulp.task('watch', ['serve'], function () {
     gulp.watch(paths.appScripts, ['scripts']);
 });
 
-// opn -- opens that url in the default browser
+// opn -- opens that url in the default or specific browser
 gulp.task('serve', ['connect'], function () {
-    require('opn')('http://localhost:8080');
+    require('opn')('http://localhost:8080','chrome');
 });
 
 //require('connect') - 'connect' is an extensible HTTP server framework for node using "plugins" known as middleware.
@@ -61,4 +61,12 @@ gulp.task('injectjs', function(){
     var sources = gulp.src([paths.appScripts]);
     return target.pipe(plugins.inject(sources, {relative: true}))
                  .pipe(gulp.dest('./src'));
+});
+
+gulp.task('default', function() {
+    connect.server({
+        root: ['src'],
+        port: 5000, // localhost:5000
+        livereload: false
+    });
 });
