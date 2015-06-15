@@ -1,0 +1,41 @@
+<div class="jumbotron col-md-6 col-md-offset-3">
+    <h3>Add result</h3>
+    <br/>
+    <form name="form" role="form">
+        <div class="row">
+            <div class="col-xs-2">
+                <div class="form-group">
+                    <label class="control-label">User:</label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Event:</label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Result:</label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Position:</label>
+                </div>
+            </div>
+            <div class="col-xs-8">
+                <div class="form-group">
+                    <select style='width:100%' ng-model="ctrl.User" ng-options="user.lastname for user in ctrl.users"></select>
+                </div>
+                <div class="form-group">
+                    <select  style='width:100%' ng-model="ctrl.Event" ng-options="event.name for event in ctrl.events"></select>
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="ctrl.result" style='width:100%' required>
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="ctrl.position" style='width:100%' required>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-success" ng-click="ctrl.addResult()" ng-disabled="form.$invalid">Legg til</button>
+            <button class="btn btn-default" ng-click="ctrl.cancel()">Avbryt</button>
+        </div>
+    </form>
+
+</div>

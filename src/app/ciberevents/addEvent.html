@@ -20,12 +20,17 @@
         <div class="col-xs-6">
             <div class="form-group">
                 <label class="control-label">Startdato:</label>
-                <input type="text" placeholder="Date" ng-model="ctrl.eventStartDate"
-                       datepicker-popup="dd/MM/yyyy" is-open="ctrl.openedStartDate" ng-click="ctrl.open($event,'openedStartDate')" close-text="Close" required />
+                <p class="input-group">
+                    <!--class="form-control"-->
+                    <input type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="ctrl.eventStartDate"
+                           is-open="openedEndDate" ng-required="true" close-text="Close" />
+                     <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open($event,'openedEndDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                      </span>
+                </p>
+                <timepicker ng-model="ctrl.endTime"></timepicker>
             </div>
-            <div class="form-group">
-                <timepicker ng-model="ctrl.startTime"></timepicker>
-            </div>
+
             <div class="form-group">
                 <label class="control-label">Sluttdato:</label>
                 <input type="text" placeholder="Date" ng-model="ctrl.eventEndDate"

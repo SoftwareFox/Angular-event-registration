@@ -3,23 +3,23 @@
 
     angular.module('ciberModule').factory('loaddataService', loaddataService);
 
-    loaddataService.$inject = ['$q', 'httpService', '$rootScope'];
+    loaddataService.$inject = ['$q', 'userService','locationService', 'eventService', '$rootScope'];
 
-    function loaddataService($q, httpService, $rootScope) {
+    function loaddataService($q, userService, locationService, eventService, $rootScope) {
 
         var service = {
             getLoggedInUser: getLoggedInUser,
-            getCiberEventAndLocations: getCiberEventAndLocations,
-            getCiberData: getCiberData,
-            getCiberUsers: getCiberUsers,
-            getCiberLocations: getCiberLocations
+            getEventAndLocations: getEventAndLocations,
+            getData: getData,
+            getUsers: getUsers,
+            getLocations: getLocations
         };
 
         return service;
 
-        function getCiberLocations(){
+        function getLocations(){
             return $q.all([
-                httpService.getCiberLocations()
+                locationService.getLocations()
             ]).then(function(results){
                 return {
                     locations: results[0]
@@ -27,9 +27,9 @@
             });
         }
 
-        function getCiberUsers(){
+        function getUsers(){
             return $q.all([
-                httpService.getCiberUsers()
+                userService.getUsers()
             ]).then(function(results){
                 return {
                     users: results[0]
@@ -37,21 +37,24 @@
             });
         }
 
-        function getCiberData() {
+        function getData() {
             return $q.all([
-                httpService.getCiberEvents(),
-                httpService.getCiberLocations()
+                eventService.getEvents(),
+                locationService.getLocations(),
+                userService.getUsers()
             ]).then(function(results){
                 return {
                     events: results[0],
-                    locations: results[1]
+                    locations: results[1],
+                    users: results[2]
                 };
             });
         }
-        function getCiberEventAndLocations(id) {
+
+        function getEventAndLocations(id) {
             return $q.all([
-                httpService.getCiberEvent(id),
-                httpService.getCiberLocations()
+                eventService.getEvent(id),
+                locationService.getLocations()
             ]).then(function(results){
                 return {
                     event: results[0],

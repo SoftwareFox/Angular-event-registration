@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('ciberModule').controller('CiberLocationsCtrl', CiberLocationsCtrl);
-    CiberLocationsCtrl.$inject = ['initialData', 'httpService', 'dialogsService', 'utilService', 'maps', '$timeout'];
+    CiberLocationsCtrl.$inject = ['initialData', 'locationService', 'dialogsService', 'utilService', 'maps', '$timeout'];
 
-    function CiberLocationsCtrl(initialData, httpService, dialogsService, utilService, maps, $timeout) {
+    function CiberLocationsCtrl(initialData, locationService, dialogsService, utilService, maps, $timeout) {
         var ctrl = this;
 
         ctrl.locations = initialData.locations;
@@ -50,7 +50,7 @@
         function deleteLocation(id) {
             dialogsService.confirm('Er du sikker at du vil slette denne plasseringen?', 'Slett?', ['Slett', 'Avbryt'])
                 .then(function () {
-                    httpService.deleteCiberLocation(id).then(function (data) {
+                    locationService.deleteCiberLocation(id).then(function (data) {
                         _.remove(ctrl.locations, {'id': id});
                     });
                 });

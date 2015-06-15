@@ -5,7 +5,8 @@
         'ui.calendar',
         'ui.router',
         'uiGmapgoogle-maps',
-        'ngCookies'
+        'ngCookies',
+        'angular-md5'
     ]);
 
     app.config(['$stateProvider','$urlRouterProvider','uiGmapGoogleMapApiProvider', configRoutes ]);
@@ -29,7 +30,7 @@
                 controllerAs: 'ctrl',
                 resolve:{
                     initialData: ['loaddataService', function (loaddataService) {
-                        return loaddataService.getCiberUsers();
+                        return loaddataService.getUsers();
                     }]
                 }
             })
@@ -40,7 +41,7 @@
                 controllerAs: 'ctrl',
                 resolve:{
                     initialData: ['loaddataService', function (loaddataService) {
-                        return loaddataService.getCiberUsers();
+                        return loaddataService.getUsers();
                     }]
                 }
             })
@@ -50,8 +51,8 @@
                 controller: 'CiberUsersCtrl',
                 controllerAs: 'ctrl',
                 resolve:{
-                    initialData:['$stateParams','httpService', function($stateParams, httpService){
-                        return httpService.getCiberUser($stateParams.id);
+                    initialData:['$stateParams','loaddataService', function($stateParams, loaddataService){
+                        return loaddataService.getUsers();
                     }]
                 }
             })
@@ -61,8 +62,8 @@
                 controller: 'CiberLocationCtrl',
                 controllerAs: 'ctrl',
                 resolve:{
-                    initialData:['$stateParams','httpService', function($stateParams, httpService){
-                        return httpService.getCiberLocation($stateParams.id);
+                    initialData:['$stateParams','locationService', function($stateParams, locationService){
+                        return locationService.getLocation($stateParams.id);
                     }],
                     maps: ['uiGmapGoogleMapApi', function(uiGmapGoogleMapApi){
                         return uiGmapGoogleMapApi;
@@ -83,7 +84,7 @@
                 controllerAs: 'ctrl',
                 resolve:{
                     initialData: ['loaddataService', function (loaddataService) {
-                        return loaddataService.getCiberLocations();
+                        return loaddataService.getLocations();
                     }],
                     maps: ['uiGmapGoogleMapApi', function(uiGmapGoogleMapApi){
                         return uiGmapGoogleMapApi;
@@ -117,8 +118,8 @@
                 controller: 'CiberLocationCtrl',
                 controllerAs: 'ctrl',
                 resolve:{
-                    initialData:['$stateParams','httpService', function($stateParams, httpService){
-                        return httpService.getCiberLocation($stateParams.id);
+                    initialData:['$stateParams','locationService', function($stateParams, locationService){
+                        return locationService.getLocation($stateParams.id);
                     }],
                     maps: ['uiGmapGoogleMapApi', function(uiGmapGoogleMapApi){
                         return uiGmapGoogleMapApi;
@@ -139,7 +140,7 @@
                 controllerAs: 'ctrl',
                 resolve:{
                     initialData: ['loaddataService', function (loaddataService) {
-                        return loaddataService.getCiberData();
+                        return loaddataService.getData();
                     }]
                 }
             })
@@ -150,7 +151,7 @@
                 controllerAs: 'ctrl',
                 resolve:{
                     initialData: ['loaddataService', function (loaddataService) {
-                        return loaddataService.getCiberLocations();
+                        return loaddataService.getLocations();
                     }]
                 }
             })
@@ -161,7 +162,7 @@
                 controllerAs: 'ctrl',
                 resolve:{
                     initialData:['$stateParams','loaddataService', function($stateParams, loaddataService){
-                        return loaddataService.getCiberEventAndLocations($stateParams.id);
+                        return loaddataService.getEventAndLocations($stateParams.id);
                     }]
                 }
             })
@@ -172,7 +173,7 @@
                 controllerAs: 'ctrl',
                 resolve:{
                     initialData:['$stateParams','loaddataService', function($stateParams, loaddataService){
-                        return loaddataService.getCiberEventAndLocations($stateParams.id);
+                        return loaddataService.getEventAndLocations($stateParams.id);
                     }],
                     maps: ['uiGmapGoogleMapApi', function(uiGmapGoogleMapApi){
                         return uiGmapGoogleMapApi;
@@ -186,7 +187,7 @@
                     controllerAs: 'ctrl',
                 resolve:{
                     initialData: ['loaddataService', function (loaddataService) {
-                        return loaddataService.getCiberData();
+                        return loaddataService.getData();
                     }]
                 }
                 })
@@ -195,6 +196,17 @@
                 templateUrl: 'app/login/login.html',
                 controller: 'LoginController',
                 controllerAs: 'ctrl'
+            })
+            .state('addResult',{
+                url:'/addResult',
+                templateUrl:'app/result/addResult.html',
+                controller:'ResultController',
+                controllerAs:'ctrl',
+                resolve:{
+                    initialData: ['loaddataService', function (loaddataService) {
+                        return loaddataService.getData();
+                    }]
+                }
             });
 
         $urlRouterProvider.otherwise('/login');

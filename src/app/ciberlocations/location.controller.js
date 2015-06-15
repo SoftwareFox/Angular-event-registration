@@ -5,9 +5,9 @@
 ( function (){
     'use strict';
     angular.module('ciberModule').controller('CiberLocationCtrl',CiberLocationCtrl);
-    CiberLocationCtrl.$inject = ['initialData', 'httpService','$location', '$timeout', 'maps', 'currentPosition'];
+    CiberLocationCtrl.$inject = ['initialData', 'locationService','$location', '$timeout', 'maps', 'currentPosition'];
 
-    function CiberLocationCtrl(initialData, httpService, $location, $timeout, maps, currentPosition) {
+    function CiberLocationCtrl(initialData, locationService, $location, $timeout, maps, currentPosition) {
         var ctrl = this;
         ctrl.location = initialData;
 
@@ -100,13 +100,13 @@
                 longitude: ctrl.longitude,
                 description : ctrl.directions
             };
-            httpService.addCiberLocation(location).then(function(data){
+            locationService.addLocation(location).then(function(data){
                 $location.path('/ciberlocations');
             });
         }
 
         function saveLocation(location) {
-            httpService.saveCiberLocation(location).then(
+            locationService.saveLocation(location).then(
                 function (data) {
                     $location.path('/ciberlocations');
                 }, function (reason) {

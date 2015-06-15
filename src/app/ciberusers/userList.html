@@ -5,6 +5,7 @@
         <thead>
         <tr>
             <th>Id</th>
+            <th></th>
             <th>Etternavn</th>
             <th>Fornavn</th>
             <th>Epost</th>
@@ -14,6 +15,7 @@
         <tbody>
         <tr ng-repeat="user in ctrl.users | filter : ctrl.paginate">
             <td>{{user.id}}</td>
+            <td><img ng-src="http://www.gravatar.com/avatar/{{ctrl.emailhashList[user.id]}}" title="{{user.firstname}} {{user.lastname}}" /></td>
             <td>{{user.firstname}}</td>
             <td>{{user.lastname}}</td>
             <td>{{user.email}}</td>

@@ -35,7 +35,7 @@ gulp.task('watch', ['serve'], function () {
 
 // opn -- opens that url in the default or specific browser
 gulp.task('serve', ['connect'], function () {
-    require('opn')('http://localhost:8080','chrome');
+    require('opn')('http://localhost:5000','chrome');
 });
 
 //require('connect') - 'connect' is an extensible HTTP server framework for node using "plugins" known as middleware.
@@ -48,9 +48,9 @@ gulp.task('connect', function () {
         .use(connect.directory('src'));
 
     require('http').createServer(app)
-        .listen(8080)
+        .listen(5000)
         .on('listening', function () {
-            console.log('Started connect web server on http://localhost:8080');
+            console.log('Started connect web server on http://localhost:5000');
         });
 });
 
@@ -66,7 +66,7 @@ gulp.task('injectjs', function(){
 gulp.task('default', function() {
     connect.server({
         root: ['src'],
-        port: process.env.PORT || 5000, // localhost:5000
+        port: process.env.PORT,
         livereload: false
     });
 });

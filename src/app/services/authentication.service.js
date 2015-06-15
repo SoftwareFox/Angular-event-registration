@@ -3,9 +3,9 @@
 
     angular.module('ciberModule').factory('authenticationService', authenticationService);
 
-    authenticationService.$inject = ['$cookieStore', '$rootScope', '$timeout', 'httpService'];
+    authenticationService.$inject = ['$cookieStore', '$rootScope', '$timeout', 'userService'];
 
-    function authenticationService( $cookieStore, $rootScope, $timeout, httpService) {
+    function authenticationService( $cookieStore, $rootScope, $timeout, userService) {
         var service = {
             login: login,
             setCredentials: setCredentials,
@@ -17,7 +17,7 @@
         function login(username, password, callback) {
             $timeout(function () {
                 var response;
-                httpService.getCiberUserByEmail(username)
+                userService.getUserByEmail(username)
                     .then(function (user) {
                         if (user != null ){//&& user.password === password) {
                             response = {success: true, user: user};

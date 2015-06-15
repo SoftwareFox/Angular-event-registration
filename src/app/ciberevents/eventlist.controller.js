@@ -2,18 +2,22 @@
     'use strict';
 
     angular.module('ciberModule').controller('CiberEventsCtrl',CiberEventsCtrl);
-    CiberEventsCtrl.$inject = ['initialData', 'httpService', 'dialogsService', 'loaddataService', 'utilService'];
+    CiberEventsCtrl.$inject = ['initialData', 'eventService', 'dialogsService', 'loaddataService', 'utilService'];
 
-    function CiberEventsCtrl(initialData, httpService, dialogsService, loaddataService, utilService) {
+    function CiberEventsCtrl(initialData, eventService, dialogsService, loaddataService, utilService) {
         var ctrl = this;
 
         ctrl.events = initialData.events;
         ctrl.locations = initialData.locations;
+        ctrl.locations.push({});
         ctrl.deleteItem = deleteItem;
         ctrl.unregister = unregister;
         ctrl.register = register;
         ctrl.paginate = paginate;
         ctrl.registrationEventMap = {};
+        ctrl.search = search;
+        ctrl.open = openDatePicker;
+
 
         ctrl.calendarConfig = {
             height : 400
@@ -22,6 +26,7 @@
         activate();
 
         function activate() {
+            ctrl.events = initialData.events;
             var calendarEvents = _.map(ctrl.events, mapEventForCalendar);
             ctrl.eventSources = [calendarEvents];
 
@@ -42,6 +47,32 @@
             });
         }
 
+        function openDatePicker($event) {
+            ctrl.opened=true;
+        }
+
+        function search(){
+            ctrl.events = initialData.events;
+            var locationSelected = !angular.equals(ctrl.Location, {});
+            var dateSelected = !angular.isUndefined(ctrl.startDate) ;
+            if (locationSelected || dateSelected) {
+                var requestedEvents = [];
+                _.forEach(ctrl.events, function (event) {
+                    if (locationSelected && dateSelected &&
+                            (event.location.id == ctrl.Location.id) && (event.startDate >= ctrl.startDate)){
+                                requestedEvents.push(event);
+                    }
+                    if (locationSelected && (!dateSelected) &&(event.location.id == ctrl.Location.id)) {
+                        requestedEvents.push(event);
+                    }
+                    if ((!locationSelected) && dateSelected && event.startDate >= ctrl.startDate){
+                        requestedEvents.push(event);
+                    }
+                });
+                ctrl.events = requestedEvents;
+            }
+        }
+
         function mapEventForCalendar(event){
             return {
                 id: event.id,
@@ -59,7 +90,7 @@
         function deleteItem(id) {
             dialogsService.confirm('Er du sikker at du vil slette denne eventen?', 'Slett?', ['Slett', 'Avbryt'])
                 .then(function () {
-                    httpService.deleteCiberEvent(id).then(function (data) {
+                    eventService.deleteEvent(id).then(function (data) {
                         _.remove(ctrl.events, {'id': id});
                     });
                 });
@@ -67,13 +98,13 @@
 
         function unregister(id) {
             if (loaddataService.getLoggedInUser() != null) {
-                httpService.getCiberEvent(id).then(function (data) {
+                eventService.getEvent(id).then(function (data) {
                     data.users.forEach(function (user, index) {
                         if (user.id == loaddataService.getLoggedInUser().id) {
                             data.users.splice(index, 1);
                         }
                     });
-                    httpService.saveCiberEvent(data).then(function (data) {
+                    eventService.saveEvent(data).then(function (data) {
                         ctrl.registrationEventMap[id] = false;
                     });
                 });
@@ -82,9 +113,9 @@
 
         function register(id) {
             if (loaddataService.getLoggedInUser() != null) {
-                httpService.getCiberEvent(id).then(function (data) {
+                eventService.getEvent(id).then(function (data) {
                     data.users.push(loaddataService.getLoggedInUser());
-                    httpService.saveCiberEvent(data).then(function (data) {
+                    eventService.saveEvent(data).then(function (data) {
                         ctrl.registrationEventMap[id] = true;
                     });
                 });

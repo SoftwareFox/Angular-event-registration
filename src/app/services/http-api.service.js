@@ -8,89 +8,63 @@
        function httpService($http, appSpinner) {
            var baseUrl = 'https://ciber-event-aggregator.herokuapp.com';
 
+           var myMicroserviceUrl = 'http://localhost:3000/microservice';
+
            var requestConfig = {
                headers: {
                    'Content-Type': 'application/json'
                }
            };
+
             var service = {
-                getCiberEvents: getCiberEvents,
-                getCiberEvent: getCiberEvent,
-                addCiberEvent: addCiberEvent,
-                getCiberLocations: getCiberLocations,
-                deleteCiberEvent: deleteCiberEvent,
-                saveCiberEvent: saveCiberEvent,
-                getCiberUsers: getCiberUsers,
-                addCiberUser: addCiberUser,
-                getCiberUserByEmail: getCiberUserByEmail,
-                deleteCiberUser: deleteCiberUser,
-                getCiberUser: getCiberUser,
-                saveCiberUser: saveCiberUser,
-                getCiberLocation: getCiberLocation,
-                addCiberLocation: addCiberLocation,
-                deleteCiberLocation: deleteCiberLocation,
-                saveCiberLocation: saveCiberLocation
+                getItems:getItems,
+                getItem: getItem,
+                addItem:addItem,
+                saveItem: saveItem,
+                deleteItem: deleteItem,
+                httpGet: httpGet,
+                addResult: addResult
             };
 
-        return service;
+            return service;
 
-       function getCiberEvent(id){
-           return httpGet('/events/' + id);
-       }
-        function getCiberEvents() {
-           return httpGet('/events?max=100');
-       }
+           function getItems(requestUrl) {
+               return httpGet(requestUrl+'?max=100');
+           }
 
-       function getCiberLocations() {
-           return httpGet('/locations?max=100');
-       }
+           function getItem(requestUrl, id){
+               return httpGet(requestUrl+'/' + id);
+           }
 
-       function addCiberEvent(event){
-          return httpPost('/events', event);
-       }
-       function deleteCiberEvent(id){
-           return httpDelete('/events/' + id);
-       }
-       function saveCiberEvent(event){
-           return httpPut('/events/' + event.id, event);
-        }
+           function addItem(requestUrl, item){
+               return httpPost(requestUrl, item);
+           }
 
-       function getCiberUsers() {
-           return httpGet('/users?max=100');
-       }
-       function addCiberUser(user){
-           return httpPost('/users', user);
-       }
+           function deleteItem(requestUrl, id){
+               return httpDelete(requestUrl+'/'+ id);
+           }
 
-       function getCiberUserByEmail(email){
-           return httpGet('/users/search/findByEmail?email='+email);
-       }
+           function saveItem(requestUrl, item){
+               return httpPut(requestUrl+'/'+ item.id, item);
+           }
 
-       function getCiberUser(id){
-           return httpGet('/users/' + id);
-       }
-       function saveCiberUser(user){
-           return httpPut('/users/' + user.id, user);
-       }
+           function httpGet(url){
+               return httpExecute(url, 'GET');
+           }
 
-       function deleteCiberUser(id){
-           return httpDelete('/users/'+ id);
-       }
+           function httpPut(url, data){
+               return httpExecute(url, 'PUT', data);
+           }
 
-       function getCiberLocation(id){
-           return httpGet('/locations/' + id);
-       }
-       function addCiberLocation(location){
-           console.log(location);
-           return httpPost('/locations', location);
-       }
-       function deleteCiberLocation(id){
-           return httpDelete('/locations/'+ id);
-       }
-       function saveCiberLocation(location){
-           return httpPut('/locations/'+ location.id, location);
-       }
-        function httpExecute(requestUrl, method, data){
+           function httpPost( url, data){
+               return httpExecute(url, 'POST', data);
+           }
+
+           function httpDelete(url){
+               return httpExecute(url, 'DELETE');
+           }
+
+           function httpExecute(requestUrl, method, data){
                appSpinner.showSpinner();
                return $http({
                    url: baseUrl +requestUrl,
@@ -102,22 +76,10 @@
                    appSpinner.hideSpinner();
                    return response.data;
                });
-        }
+            }
 
-        function httpGet(url){
-            return httpExecute(url, 'GET');
-        }
-
-       function httpPut(url, data){
-           return httpExecute(url, 'PUT', data);
-       }
-
-        function httpPost( url, data){
-            return httpExecute(url, 'POST', data);
-        }
-
-        function httpDelete(url){
-           return httpExecute(url, 'DELETE');
-        }
+           function addResult(requestUrl, reresult){
+               return $http.post(myMicroserviceUrl + requestUrl, reresult);
+           }
     }
 })();

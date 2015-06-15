@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('ciberModule').controller('CiberEventCtrl',CiberEventCtrl);
-    CiberEventCtrl.$inject = ['initialData', 'httpService', '$location'];
+    CiberEventCtrl.$inject = ['initialData', 'eventService', '$location'];
 
-    function CiberEventCtrl(initialData, httpService, $location) {
+    function CiberEventCtrl(initialData, eventService, $location) {
         var ctrl = this;
         ctrl.event = initialData.event;
         ctrl.locations = initialData.locations;
@@ -45,21 +45,22 @@
         }
 
         function openDatePicker($event, opened) {
-           // $event.preventDefault();
-           // $event.stopPropagation();
+            $event.preventDefault();
+            $event.stopPropagation();
             if (opened == 'openedStartDate') {
                 ctrl.openedStartDate = true;
-            }
-            else {
-                ctrl.openedEndDate = true;
-            }
+            }else if(opened=='opened'){
+                ctrl.opened=true;
+                }else {
+                    ctrl.openedEndDate = true;
+                }
         }
 
         function saveEvent(event){
             event.startDate = getTime(event.startDate, ctrl.startTime);
             event.endDate = getTime(event.endDate, ctrl.endTime);
             event.location = ctrl.Location;
-            httpService.saveCiberEvent(event).then(
+            eventService.saveEvent(event).then(
                 function(data){
                     $location.path('/ciberevents');
                 }, function(reason) {
@@ -78,7 +79,7 @@
                 users: []
             };
 
-            httpService.addCiberEvent(newEvent).then(function(data){
+            eventService.addEvent(newEvent).then(function(data){
                 $location.path('/ciberevents');
             });
         }

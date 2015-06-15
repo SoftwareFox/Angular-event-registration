@@ -14,7 +14,7 @@
                 </th>
                 <th>Sluttdato</th>
                 <th>Plassering
-                    <select ng-model="ctrl.Location" ng-options="location.location for location in ctrl.locations"></select>
+                    <select ng-model="ctrl.Location" ng-options="location.location for location in ctrl.locations" ng-init="ctrl.Location=ctrl.locations[ctrl.locations.length-1]"></select>
                 </th>
                 <th> <button class="btn btn-success" ng-click="ctrl.search()">Søk</button></th>
             </tr>
